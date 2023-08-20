@@ -1,5 +1,5 @@
 -- Project Name : service-db-tast-management-service
--- Date/Time    : 2023/08/19 19:01:07
+-- Date/Time    : 2023/08/20 19:46:19
 -- Author       : shhashi
 -- RDBMS Type   : PostgreSQL
 -- Application  : A5:SQL Mk-2
@@ -12,150 +12,150 @@
   この機能は A5:SQL Mk-2でのみ有効であることに注意してください。
 */
 
--- task_statuses
+-- 状態
 -- * RestoreFromTempTable
-create table "状態" (
-  "状態ID" smallint not null
-  , "状態" varchar(50)
-  , constraint "状態_PKC" primary key ("状態ID")
+create table task_statuses (
+                             status_id smallint not null
+  , status varchar(50)
+  , constraint task_statuses_PKC primary key (status_id)
 ) ;
 
--- tasks
+-- タスク
 -- * RestoreFromTempTable
-create table "タスク" (
-  "タスクID" bigint not null
-  , "タスク名" varchar(100)
-  , "ステージID" bigint not null
-  , "担当者アカウントID" bigint not null
-  , "タスク説明" varchar(500)
-  , "状態ID" smallint not null
-  , "タスク開始日" date
-  , "タスク終了日" date
-  , "レコード作成日" date
-  , "レコード終了日" date
-  , constraint "タスク_PKC" primary key ("タスクID")
+create table tasks (
+                     task_id bigint not null
+  , task_name varchar(100)
+  , stage_id bigint not null
+  , worker_account_id bigint not null
+  , description varchar(500)
+  , status_id smallint not null
+  , start_date date
+  , end_date date
+  , created_at date
+  , deleted_at date
+  , constraint tasks_PKC primary key (task_id)
 ) ;
 
--- stages
+-- ステージ
 -- * RestoreFromTempTable
-create table "ステージ" (
-  "ステージID" bigint not null
-  , "プロジェクトID" bigint not null
-  , "ステージ名" varchar(100)
-  , "ステージ開始日" date
-  , "ステージ終了日" date
-  , "レコード作成日" date
-  , "レコード論理削除日" date
-  , constraint "ステージ_PKC" primary key ("ステージID")
+create table stages (
+                      stage_id bigint not null
+  , project_id bigint not null
+  , stage_name varchar(100)
+  , start_date date
+  , end_date date
+  , created_at date
+  , deleted_at date
+  , constraint stages_PKC primary key (stage_id)
 ) ;
 
--- assignment
+-- プロジェクト参画
 -- * RestoreFromTempTable
-create table "プロジェクト参画" (
-  "アサインID" bigint not null
-  , "プロジェクトID" bigint not null
-  , "アカウントID" bigint not null
-  , "レコード作成日時" date
-  , "レコード論理削除日時" date
-  , constraint "プロジェクト参画_PKC" primary key ("アサインID")
+create table assignment (
+                          assignment_id bigint not null
+  , project_id bigint not null
+  , account_id bigint not null
+  , created_at date
+  , deleted_at date
+  , constraint assignment_PKC primary key (assignment_id)
 ) ;
 
--- authentications
+-- ログイン情報
 -- * RestoreFromTempTable
-create table "ログイン情報" (
-  "アカウントID" bigint not null
-  , "パスワード" varchar(100) not null
-  , "レコード作成日時" date not null
-  , "レコード更新日時" date
-  , "レコード削除日時" date
-  , constraint "ログイン情報_PKC" primary key ("アカウントID")
+create table authentications (
+                               account_id bigint not null
+  , password varchar(100) not null
+  , created_at date not null
+  , updated_at date
+  , deleted_at date
+  , constraint authentications_PKC primary key (account_id)
 ) ;
 
--- accounts
+-- アカウント
 -- * RestoreFromTempTable
-create table "アカウント" (
-  "アカウントID" bigint not null
-  , "ログインID" varchar(100) not null
-  , "アカウント名" varchar(30) not null
-  , "レコード作成日時" date
-  , constraint "アカウント_PKC" primary key ("アカウントID")
+create table accounts (
+                        account_id bigint not null
+  , login_id varchar(100) not null
+  , account_name varchar(30) not null
+  , created_at date
+  , constraint accounts_PKC primary key (account_id)
 ) ;
 
--- projects
+-- プロジェクト
 -- * RestoreFromTempTable
-create table "プロジェクト" (
-  "プロジェクトID" bigint not null
-  , "プロジェクト名" varchar(100)
-  , constraint "プロジェクト_PKC" primary key ("プロジェクトID")
+create table projects (
+                        project_id bigint not null
+  , project_name varchar(100)
+  , constraint projects_PKC primary key (project_id)
 ) ;
 
-alter table "タスク"
-  add constraint "タスク_FK1" foreign key ("状態ID") references "状態"("状態ID");
+alter table tasks
+  add constraint tasks_FK1 foreign key (status_id) references task_statuses(status_id);
 
-alter table "タスク"
-  add constraint "タスク_FK2" foreign key ("担当者アカウントID") references "アカウント"("アカウントID");
+alter table tasks
+  add constraint tasks_FK2 foreign key (worker_account_id) references accounts(account_id);
 
-alter table "タスク"
-  add constraint "タスク_FK3" foreign key ("ステージID") references "ステージ"("ステージID");
+alter table tasks
+  add constraint tasks_FK3 foreign key (stage_id) references stages(stage_id);
 
-alter table "ステージ"
-  add constraint "ステージ_FK1" foreign key ("プロジェクトID") references "プロジェクト"("プロジェクトID");
+alter table stages
+  add constraint stages_FK1 foreign key (project_id) references projects(project_id);
 
-alter table "プロジェクト参画"
-  add constraint "プロジェクト参画_FK1" foreign key ("アカウントID") references "アカウント"("アカウントID");
+alter table assignment
+  add constraint assignment_FK1 foreign key (account_id) references accounts(account_id);
 
-alter table "プロジェクト参画"
-  add constraint "プロジェクト参画_FK2" foreign key ("プロジェクトID") references "プロジェクト"("プロジェクトID");
+alter table assignment
+  add constraint assignment_FK2 foreign key (project_id) references projects(project_id);
 
-alter table "アカウント"
-  add constraint "アカウント_FK1" foreign key ("アカウントID") references "ログイン情報"("アカウントID");
+alter table accounts
+  add constraint accounts_FK1 foreign key (account_id) references authentications(account_id);
 
-comment on table "状態" is 'task_statuses';
-comment on column "状態"."状態ID" is 'status_id';
-comment on column "状態"."状態" is 'status';
+comment on table task_statuses is '状態';
+comment on column task_statuses.status_id is '状態ID';
+comment on column task_statuses.status is '状態';
 
-comment on table "タスク" is 'tasks';
-comment on column "タスク"."タスクID" is 'task_id';
-comment on column "タスク"."タスク名" is 'task_name';
-comment on column "タスク"."ステージID" is 'stage_id';
-comment on column "タスク"."担当者アカウントID" is 'worker_account_id';
-comment on column "タスク"."タスク説明" is 'description';
-comment on column "タスク"."状態ID" is 'status_id';
-comment on column "タスク"."タスク開始日" is 'start_date';
-comment on column "タスク"."タスク終了日" is 'end_date';
-comment on column "タスク"."レコード作成日" is 'created_at';
-comment on column "タスク"."レコード終了日" is 'deleted_at';
+comment on table tasks is 'タスク';
+comment on column tasks.task_id is 'タスクID';
+comment on column tasks.task_name is 'タスク名';
+comment on column tasks.stage_id is 'ステージID';
+comment on column tasks.worker_account_id is '担当者アカウントID';
+comment on column tasks.description is 'タスク説明';
+comment on column tasks.status_id is '状態ID';
+comment on column tasks.start_date is 'タスク開始日';
+comment on column tasks.end_date is 'タスク終了日';
+comment on column tasks.created_at is 'レコード作成日';
+comment on column tasks.deleted_at is 'レコード終了日';
 
-comment on table "ステージ" is 'stages';
-comment on column "ステージ"."ステージID" is 'stage_id';
-comment on column "ステージ"."プロジェクトID" is 'project_id';
-comment on column "ステージ"."ステージ名" is 'stage_name';
-comment on column "ステージ"."ステージ開始日" is 'start_date';
-comment on column "ステージ"."ステージ終了日" is 'end_date';
-comment on column "ステージ"."レコード作成日" is 'created_at';
-comment on column "ステージ"."レコード論理削除日" is 'deleted_at';
+comment on table stages is 'ステージ';
+comment on column stages.stage_id is 'ステージID';
+comment on column stages.project_id is 'プロジェクトID';
+comment on column stages.stage_name is 'ステージ名';
+comment on column stages.start_date is 'ステージ開始日';
+comment on column stages.end_date is 'ステージ終了日';
+comment on column stages.created_at is 'レコード作成日';
+comment on column stages.deleted_at is 'レコード論理削除日';
 
-comment on table "プロジェクト参画" is 'assignment';
-comment on column "プロジェクト参画"."アサインID" is 'assignment_id';
-comment on column "プロジェクト参画"."プロジェクトID" is 'project_id';
-comment on column "プロジェクト参画"."アカウントID" is 'account_id';
-comment on column "プロジェクト参画"."レコード作成日時" is 'created_at';
-comment on column "プロジェクト参画"."レコード論理削除日時" is 'deleted_at';
+comment on table assignment is 'プロジェクト参画';
+comment on column assignment.assignment_id is 'アサインID';
+comment on column assignment.project_id is 'プロジェクトID';
+comment on column assignment.account_id is 'アカウントID';
+comment on column assignment.created_at is 'レコード作成日時';
+comment on column assignment.deleted_at is 'レコード論理削除日時';
 
-comment on table "ログイン情報" is 'authentications';
-comment on column "ログイン情報"."アカウントID" is 'account_id';
-comment on column "ログイン情報"."パスワード" is 'password';
-comment on column "ログイン情報"."レコード作成日時" is 'created_at';
-comment on column "ログイン情報"."レコード更新日時" is 'updated_at';
-comment on column "ログイン情報"."レコード削除日時" is 'deleted_at';
+comment on table authentications is 'ログイン情報';
+comment on column authentications.account_id is 'アカウントID';
+comment on column authentications.password is 'パスワード';
+comment on column authentications.created_at is 'レコード作成日時';
+comment on column authentications.updated_at is 'レコード更新日時';
+comment on column authentications.deleted_at is 'レコード削除日時';
 
-comment on table "アカウント" is 'accounts';
-comment on column "アカウント"."アカウントID" is 'account_id';
-comment on column "アカウント"."ログインID" is 'login_id';
-comment on column "アカウント"."アカウント名" is 'account_name';
-comment on column "アカウント"."レコード作成日時" is 'created_at';
+comment on table accounts is 'アカウント';
+comment on column accounts.account_id is 'アカウントID';
+comment on column accounts.login_id is 'ログインID';
+comment on column accounts.account_name is 'アカウント名';
+comment on column accounts.created_at is 'レコード作成日時';
 
-comment on table "プロジェクト" is 'projects';
-comment on column "プロジェクト"."プロジェクトID" is 'project_id';
-comment on column "プロジェクト"."プロジェクト名" is 'project_name';
+comment on table projects is 'プロジェクト';
+comment on column projects.project_id is 'プロジェクトID';
+comment on column projects.project_name is 'プロジェクト名';
 
