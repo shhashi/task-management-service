@@ -1,7 +1,7 @@
 ﻿# A5:ER FORMAT:17
 # A5:ER ENCODING:UTF8
 # A5:ER Mk-1 Copyright © 2007 m.matsubara
-# A5:SQL Mk-2 Version 2.18.3 Copyright © 1997 - 2023 m.matsubara
+# A5:SQL Mk-2 Version 2.18.4 Copyright © 1997 - 2023 m.matsubara
 #  https://a5m2.mmatsubara.com
 
 [Manager]
@@ -42,68 +42,70 @@ ShowCommonAttributes=0
 BugFixEntityWidth=1
 
 [Entity]
-PName=プロジェクト
-LName=projects
+PName=projects
+LName=プロジェクト
 Comment=
 TableOption=
 Page=MAIN
 Left=100
 Top=150
-Field="project_id","プロジェクトID","bigint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="project_name","プロジェクト名","varchar(100)",,,"","",$FFFFFFFF,""
+Field="プロジェクトID","project_id","bigint","NOT NULL",0,"","",$FFFFFFFF,""
+Field="プロジェクト名","project_name","varchar(100)",,,"","",$FFFFFFFF,""
+Field="作成日","created_at","date",,,"","",$FFFFFFFF,""
+Field="クローズ日","closed_at","date",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230819165914
-Position="MAIN",100,150,476,84
+ModifiedDateTime=20230907002407
+Position="MAIN",100,150,476,194
 ZOrder=1
 
 [Entity]
-PName=アカウント
-LName=accounts
+PName=accounts
+LName=アカウント
 Comment=
 TableOption=
 Page=MAIN
 Left=1700
 Top=100
-Field="account_id","アカウントID","bigint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="login_id","ログインID","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
-Field="account_name","アカウント名","varchar(30)","NOT NULL",,"","",$FFFFFFFF,""
-Field="created_at","レコード作成日時","date",,,"","",$FFFFFFFF,""
+Field="アカウントID","account_id","bigint","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ログインID","login_id","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="アカウント名","account_name","varchar(30)","NOT NULL",,"","",$FFFFFFFF,""
+Field="レコード作成日時","created_at","date",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230819165553
+ModifiedDateTime=20230907002102
 Position="MAIN",1700,100,441,115
 ZOrder=2
 
 [Entity]
-PName=ログイン情報
-LName=authentications
+PName=authentications
+LName=ログイン情報
 Comment=
 TableOption=
 Page=MAIN
 Left=2350
 Top=100
-Field="account_id","アカウントID","bigint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="password","パスワード","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
-Field="created_at","レコード作成日時","date","NOT NULL",,"","",$FFFFFFFF,""
-Field="updated_at","レコード更新日時","date",,,"","",$FFFFFFFF,""
-Field="deleted_at","レコード削除日時","date",,,"","",$FFFFFFFF,""
+Field="アカウントID","account_id","bigint","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パスワード","password","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="レコード作成日時","created_at","date","NOT NULL",,"","",$FFFFFFFF,""
+Field="レコード更新日時","updated_at","date",,,"","",$FFFFFFFF,""
+Field="レコード削除日時","deleted_at","date",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230819165336
+ModifiedDateTime=20230907002133
 Position="MAIN",2350,100,560,238
 ZOrder=3
 
 [Relation]
-Entity1=ログイン情報
-Entity2=アカウント
+Entity1=authentications
+Entity2=accounts
 RelationType1=2
 RelationType2=1
-Fields1=アカウントID
-Fields2=アカウントID
+Fields1=account_id
+Fields2=account_id
 Cardinarity1=
 Cardinarity2=
 Position="MAIN",0,2027,7973,2543,R,R,""
@@ -120,35 +122,35 @@ TermPos2=R
 ZOrder=4
 
 [Entity]
-PName=プロジェクト参画
-LName=assignment
+PName=assignment
+LName=プロジェクト参画
 Comment=
 TableOption=
 Page=MAIN
 Left=700
 Top=150
-Field="assignment_id","アサインID","bigint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="project_id","プロジェクトID","bigint","NOT NULL",,"","",$FFFFFFFF,""
-Field="account_id","アカウントID","bigint","NOT NULL",,"","",$FFFFFFFF,""
-Field="created_at","レコード作成日時","date",,,"","",$FFFFFFFF,""
-Field="deleted_at","レコード論理削除日時","date",,,"","",$FFFFFFFF,""
+Field="アサインID","assignment_id","bigint","NOT NULL",0,"","",$FFFFFFFF,""
+Field="プロジェクトID","project_id","bigint","NOT NULL",,"","",$FFFFFFFF,""
+Field="アカウントID","account_id","bigint","NOT NULL",,"","",$FFFFFFFF,""
+Field="レコード作成日時","created_at","date",,,"","",$FFFFFFFF,""
+Field="レコード論理削除日時","deleted_at","date",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230819165621
+ModifiedDateTime=20230907001904
 Position="MAIN",700,150,478,165
 ZOrder=5
 
 [Relation]
-Entity1=プロジェクト
-Entity2=プロジェクト参画
+Entity1=projects
+Entity2=assignment
 RelationType1=2
 RelationType2=4
-Fields1=プロジェクトID
-Fields2=プロジェクトID
+Fields1=project_id
+Fields2=project_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,1617,8383,823,R,R,""
+Position="MAIN",0,1617,8383,1901,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -156,18 +158,18 @@ ModifiedDateTime=20230819165128
 LineMode=0
 Bar1=162
 Bar2=838
-Bar3=82
+Bar3=190
 TermPos1=R
 TermPos2=R
 ZOrder=6
 
 [Relation]
-Entity1=アカウント
-Entity2=プロジェクト参画
+Entity1=accounts
+Entity2=assignment
 RelationType1=2
 RelationType2=4
-Fields1=アカウントID
-Fields2=アカウントID
+Fields1=account_id
+Fields2=account_id
 Cardinarity1=
 Cardinarity2=
 Position="MAIN",0,1617,8383,1491,R,R,""
@@ -184,34 +186,35 @@ TermPos2=R
 ZOrder=8
 
 [Entity]
-PName=ステージ
-LName=stages
+PName=stages
+LName=ステージ
 Comment=
 TableOption=
 Page=MAIN
 Left=700
 Top=500
-Field="stage_id","ステージID","bigint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="project_id","プロジェクトID","bigint","NOT NULL",,"","",$FFFFFFFF,""
-Field="stage_name","ステージ名","varchar(100)",,,"","",$FFFFFFFF,""
-Field="start_date","ステージ開始日","date",,,"","",$FFFFFFFF,""
-Field="end_date","ステージ終了日","date",,,"","",$FFFFFFFF,""
-Field="created_at","レコード作成日","date",,,"","",$FFFFFFFF,""
-Field="deleted_at","レコード論理削除日","date",,,"","",$FFFFFFFF,""
+Field="ステージID","stage_id","bigint","NOT NULL",0,"","",$FFFFFFFF,""
+Field="プロジェクトID","project_id","bigint","NOT NULL",,"","",$FFFFFFFF,""
+Field="ステージ名","stage_name","varchar(100)",,,"","",$FFFFFFFF,""
+Field="ステージ開始日","start_date","date",,,"","",$FFFFFFFF,""
+Field="ステージ終了日","end_date","date",,,"","",$FFFFFFFF,""
+Field="ステージ状態","status","varchar(100)",,,"","",$FFFFFFFF,""
+Field="レコード作成日","created_at","date",,,"","",$FFFFFFFF,""
+Field="レコード論理削除日","deleted_at","date",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230819170534
+ModifiedDateTime=20230907002234
 Position="MAIN",700,500,461,212
 ZOrder=9
 
 [Relation]
-Entity1=プロジェクト
-Entity2=ステージ
+Entity1=projects
+Entity2=stages
 RelationType1=2
 RelationType2=3
-Fields1=プロジェクトID
-Fields2=プロジェクトID
+Fields1=project_id
+Fields2=project_id
 Cardinarity1=
 Cardinarity2=
 Position="MAIN",0,3670,6330,1360,R,R,""
@@ -228,37 +231,37 @@ TermPos2=R
 ZOrder=10
 
 [Entity]
-PName=タスク
-LName=tasks
+PName=tasks
+LName=タスク
 Comment=
 TableOption=
 Page=MAIN
 Left=1450
 Top=500
-Field="task_id","タスクID","bigint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="task_name","タスク名","varchar(100)",,,"","",$FFFFFFFF,""
-Field="stage_id","ステージID","bigint","NOT NULL",,"","",$FFFFFFFF,""
-Field="worker_account_id","担当者アカウントID","bigint","NOT NULL",,"","",$FFFFFFFF,""
-Field="description","タスク説明","varchar(500)",,,"","",$FFFFFFFF,""
-Field="status_id","状態ID","smallint","NOT NULL",,"","",$FFFFFFFF,""
-Field="start_date","タスク開始日","date",,,"","",$FFFFFFFF,""
-Field="end_date","タスク終了日","date",,,"","",$FFFFFFFF,""
-Field="created_at","レコード作成日","date",,,"","",$FFFFFFFF,""
-Field="deleted_at","レコード終了日","date",,,"","",$FFFFFFFF,""
+Field="タスクID","task_id","bigint","NOT NULL",0,"","",$FFFFFFFF,""
+Field="タスク名","task_name","varchar(100)",,,"","",$FFFFFFFF,""
+Field="ステージID","stage_id","bigint","NOT NULL",,"","",$FFFFFFFF,""
+Field="担当者アカウントID","worker_account_id","bigint","NOT NULL",,"","",$FFFFFFFF,""
+Field="タスク説明","description","varchar(500)",,,"","",$FFFFFFFF,""
+Field="タスク状態","status","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="タスク開始日","start_date","date",,,"","",$FFFFFFFF,""
+Field="タスク終了日","end_date","date",,,"","",$FFFFFFFF,""
+Field="レコード作成日","created_at","date",,,"","",$FFFFFFFF,""
+Field="レコード終了日","deleted_at","date",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230819180351
+ModifiedDateTime=20230907002241
 Position="MAIN",1450,500,614,276
 ZOrder=11
 
 [Relation]
-Entity1=ステージ
-Entity2=タスク
+Entity1=stages
+Entity2=tasks
 RelationType1=2
 RelationType2=3
-Fields1=ステージID
-Fields2=ステージID
+Fields1=stage_id
+Fields2=stage_id
 Cardinarity1=
 Cardinarity2=
 Position="MAIN",0,3878,6122,2979,R,R,""
@@ -275,12 +278,12 @@ TermPos2=R
 ZOrder=12
 
 [Relation]
-Entity1=アカウント
-Entity2=タスク
+Entity1=accounts
+Entity2=tasks
 RelationType1=2
 RelationType2=3
-Fields1=アカウントID
-Fields2=担当者アカウントID
+Fields1=account_id
+Fields2=worker_account_id
 Cardinarity1=
 Cardinarity2=
 Position="MAIN",0,6052,3948,6615,R,R,""
@@ -295,42 +298,3 @@ Bar3=662
 TermPos1=R
 TermPos2=R
 ZOrder=13
-
-[Entity]
-PName=状態
-LName=task_statuses
-Comment=
-TableOption=
-Page=MAIN
-Left=2300
-Top=550
-Field="status_id","状態ID","smallint","NOT NULL",0,"","",$FFFFFFFF,""
-Field="status","状態","varchar(50)",,,"","",$FFFFFFFF,""
-EffectMode=None
-Color=$000000
-BkColor=$FFFFFF
-ModifiedDateTime=20230819180721
-Position="MAIN",2300,550,327,104
-ZOrder=14
-
-[Relation]
-Entity1=状態
-Entity2=タスク
-RelationType1=2
-RelationType2=3
-Fields1=状態ID
-Fields2=状態ID
-Cardinarity1=
-Cardinarity2=
-Position="MAIN",0,3878,6122,3273,R,R,""
-Dependence=0
-Caption=
-PName=
-ModifiedDateTime=20230819180739
-LineMode=0
-Bar1=388
-Bar2=612
-Bar3=327
-TermPos1=R
-TermPos2=R
-ZOrder=15
