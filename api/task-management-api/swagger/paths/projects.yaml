@@ -1,0 +1,38 @@
+post:
+  tags:
+    - projects
+  summary: 新規プロジェクト作成
+  description: |-
+    新しいプロジェクトを作成する。
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            projectName:
+              type: string
+    required: true
+  responses:
+    '201':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              projectId:
+                type: string
+              projectName:
+                type: string
+    '400':
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string

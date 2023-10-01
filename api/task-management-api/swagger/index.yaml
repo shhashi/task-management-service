@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: task-management-api [OpenAPI 3.0]
+  description: |-
+    task-management-api の API 仕様書
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /projects:
+    $ref: ./paths/projects.yaml
+  
