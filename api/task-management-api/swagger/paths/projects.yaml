@@ -1,4 +1,4 @@
-post:
+put:
   tags:
     - projects
   summary: 新規プロジェクト作成
@@ -11,8 +11,11 @@ post:
           type: object
           properties:
             projectName:
+              description: プロジェクト名
               type: string
-    required: true
+            createdBy:
+              description: プロジェクト作成者のアカウントID
+              type: string
   responses:
     '201':
       description: Successful operation
