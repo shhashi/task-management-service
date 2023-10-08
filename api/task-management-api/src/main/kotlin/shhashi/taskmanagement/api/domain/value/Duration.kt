@@ -1,6 +1,6 @@
 package shhashi.taskmanagement.api.domain.value
 
-import shhashi.taskmanagement.api.domain.value.exception.InvalidValueException
+import shhashi.taskmanagement.api.domain.value.exception.InvalidValueObjectException
 import java.time.OffsetDateTime
 
 /**
@@ -13,7 +13,10 @@ data class Duration(
 
     init {
         if (endDateTime != null && !startDateTime.isBefore(endDateTime)) {
-            throw InvalidValueException("`endDateTime` must come after `startDateTime`.")
+            throw InvalidValueObjectException(
+                message = "INVALID_CONTRADICTING_DATETIME",
+                valueObjectName = Duration::class.java.simpleName
+            )
         }
     }
 }
