@@ -5,5 +5,5 @@ package shhashi.taskmanagement.api.domain.value
  * ステージの識別子
  */
 data class StageId(
-    val value: String
+    val value: Int
 )

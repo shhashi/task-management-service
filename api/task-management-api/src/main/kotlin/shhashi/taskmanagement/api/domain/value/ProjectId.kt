@@ -5,5 +5,5 @@ package shhashi.taskmanagement.api.domain.value
  * プロジェクトの識別子
  */
 data class ProjectId(
-    val value: String
+    val value: Int
 )
