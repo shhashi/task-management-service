@@ -15,7 +15,7 @@ import shhashi.taskmanagement.api.domain.value.StageStatus
  */
 data class Stage(
     var stageId: StageId,
-    var stageName: StageName?,
-    var duration: Duration?,
-    var status: StageStatus?
+    var stageName: StageName? = null,
+    var duration: Duration? = null,
+    var status: StageStatus? = null
 )

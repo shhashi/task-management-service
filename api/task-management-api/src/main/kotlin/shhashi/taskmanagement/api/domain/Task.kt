@@ -14,9 +14,9 @@ import shhashi.taskmanagement.api.domain.value.*
  */
 data class Task(
     var taskId: TaskId,
-    var taskName: TaskName?,
-    var assignedAccountId: AccountId?,
-    var description: Description?,
-    var taskStatus: TaskStatus?,
-    var duration: Duration?
+    var taskName: TaskName? = null,
+    var assignedAccountId: AccountId? = null,
+    var description: Description? = null,
+    var taskStatus: TaskStatus? = null,
+    var duration: Duration? = null
 )
