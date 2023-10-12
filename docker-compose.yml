@@ -5,6 +5,7 @@ services:
     ports:
       - 5432:5432
     environment:
+      POSTGRES_USER: testuser
       POSTGRES_PASSWORD: password
       POSTGRES_DB: task-service-db
     container_name: postgresql
